@@ -9,6 +9,7 @@ public class PlayerCreator: MonoBehaviour
     [SerializeField] private ObjectPool _bulletPool;
     [SerializeField] private ProgressBar _progressBar;
     [SerializeField] private CameraController _cameraController;
+    [SerializeField] private StartGameInviteText _startGameInviteText;
 
 
     private void Start()
@@ -18,5 +19,6 @@ public class PlayerCreator: MonoBehaviour
         player.gameObject.GetComponentInChildren<Weapon>().Construct(_bulletPool);
         _progressBar.Construct(player);
         _cameraController.Construct(player.transform);
+        _startGameInviteText.Construct(player);
     }
 }

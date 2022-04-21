@@ -3,12 +3,14 @@
 public class Pistol : Weapon
 {
     private Camera _camera;
+    private AudioSource _shootSound;
     private Vector3 _hitPoint;
 
     public override void Construct(ObjectPool bulletPool)
     {
         _bulletPool = bulletPool;
         _camera = Camera.main;
+        _shootSound = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -31,6 +33,7 @@ public class Pistol : Weapon
             }
             Vector3 direction = (_hitPoint - _firePoint.transform.position).normalized;
             bullet.GetComponent<BaseBullet>().Fly(direction);
+            _shootSound.Play();
         }
     }
 }
