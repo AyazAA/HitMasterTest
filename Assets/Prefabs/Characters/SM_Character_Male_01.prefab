@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1045401375514670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4835f67c1e52ed44aa65c384bf269c42, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cdb5346f42dcf8448047e940bafacae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1063867024875804
@@ -2252,4 +2252,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _firePoint: {fileID: 1201399088318336783}
-  _force: 10000

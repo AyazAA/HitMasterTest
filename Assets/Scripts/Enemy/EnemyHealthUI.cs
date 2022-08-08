@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class EnemyHealthUI : MonoBehaviour 
 {
     [SerializeField] private BaseEnemy _enemy;
@@ -9,17 +10,22 @@ public class EnemyHealthUI : MonoBehaviour
     private void Start()
     {
         _barSlider = GetComponent<Slider>();
-        _enemy.OnHealthChanged += HealthChangeUI;
+        _enemy.HealthChanged += HealthChangeUI;
     }
 
     private void OnDestroy()
     {
-        _enemy.OnHealthChanged -= HealthChangeUI;
+        _enemy.HealthChanged -= HealthChangeUI;
     }
 
-    private void HealthChangeUI(float currentHealth, float maxHealth)
+    private void HealthChangeUI(float currentHealthPercent)
     {
-        _barSlider.value = (currentHealth / maxHealth);
+        _barSlider.value = currentHealthPercent;
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
 

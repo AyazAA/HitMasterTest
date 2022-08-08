@@ -6,9 +6,11 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private GameObject _objectToPool;
     [SerializeField] private int _countToPool = 5;
     private List<GameObject> _poolObjects;
+    private Transform _parentObject;
 
     private void Start()
     {
+        _parentObject = new GameObject().transform;
         _poolObjects = new List<GameObject>();
         for (int i = 0; i < _countToPool; i++)
         {
@@ -18,7 +20,7 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject GetPooledObject()
     {
-        for (int i = 0; i < _countToPool; i++)
+        for (int i = 0; i < _poolObjects.Count; i++)
         {
             if (!_poolObjects[i].activeInHierarchy)
             {
@@ -30,7 +32,7 @@ public class ObjectPool : MonoBehaviour
 
     private GameObject CreateNewObject()
     {
-        GameObject tmp = Instantiate(_objectToPool);
+        GameObject tmp = Instantiate(_objectToPool, _parentObject);
         tmp.SetActive(false);
         _poolObjects.Add(tmp);
         return tmp;

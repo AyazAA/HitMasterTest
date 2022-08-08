@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(TMP_Text))]
 public class StartGameInviteText : MonoBehaviour
 {
     private MoveToPoints _moveToPoints;
@@ -10,17 +11,17 @@ public class StartGameInviteText : MonoBehaviour
     {
         _inviteText = GetComponent<TMP_Text>();
         _moveToPoints = moveToPoints;
-        _moveToPoints.OnPointChanged += TextHide;
+        _moveToPoints.PointChanged += TextHide;
     }
 
     private void OnDestroy()
     {
-        _moveToPoints.OnPointChanged -= TextHide;
+        _moveToPoints.PointChanged -= TextHide;
     }
 
     private void TextHide(int currentPoint, int amountPoints)
     {
-        if(currentPoint == 1)
+        if(currentPoint != 0)
         {
             _inviteText.gameObject.SetActive(false);
         }

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(EnemyRagdoll),(typeof(CapsuleCollider)))]
 public class Enemy: BaseEnemy
 {
-    [SerializeField] private float _damage = 0.35f;
     private EnemyRagdoll _enemyRagdoll;
     private CapsuleCollider _capsuleCollider;
 
@@ -11,19 +11,18 @@ public class Enemy: BaseEnemy
         _enemyRagdoll = GetComponent<EnemyRagdoll>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _health = _maxHealth;
-        OnHealthChangedInvoke();
+        HealthChangedInvoke();
     }
     
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent<BaseBullet>(out var bullet))
         {
-            other.gameObject.SetActive(false);
-            _health -= _damage;
-            OnHealthChangedInvoke();
+            _health -= bullet.Damage;
+            HealthChangedInvoke();
             if (_health <= 0)
             {
-                OnDiedInvoke();
+                DiedInvoke();
                 _capsuleCollider.enabled = false;
                 _enemyRagdoll.ActivateRagdoll();
             }

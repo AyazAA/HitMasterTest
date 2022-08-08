@@ -3,19 +3,19 @@ using UnityEngine;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
-    public event Action OnDied;
-    public event Action<float, float> OnHealthChanged;
+    public event Action Died;
+    public event Action<float> HealthChanged;
     protected float _health;
     [SerializeField] protected float _maxHealth;
 
-    protected void OnDiedInvoke()
+    protected void DiedInvoke()
     {
-        OnDied?.Invoke();
+        Died?.Invoke();
     }
 
-    protected void OnHealthChangedInvoke()
+    protected void HealthChangedInvoke()
     {
-        OnHealthChanged?.Invoke(_health,_maxHealth);
+        HealthChanged?.Invoke(_health / _maxHealth);
     }
 }
 

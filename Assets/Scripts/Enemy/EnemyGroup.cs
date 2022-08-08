@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyGroup : MonoBehaviour
 {
-    public event Action OnEnemyGroupDead;
+    public event Action EnemyGroupDead;
     [SerializeField] private BaseEnemy[] _enemies;
     private int _enemyCount;
 
@@ -11,7 +11,7 @@ public class EnemyGroup : MonoBehaviour
     {
         for (int i = 0; i < _enemies.Length; i++)
         {
-            _enemies[i].OnDied += EnemyDied;
+            _enemies[i].Died += EnemyDied;
         }
     }
 
@@ -19,7 +19,7 @@ public class EnemyGroup : MonoBehaviour
     {
         for (int i = 0; i < _enemies.Length; i++)
         {
-            _enemies[i].OnDied -= EnemyDied;
+            _enemies[i].Died -= EnemyDied;
         }
     }
 
@@ -33,7 +33,7 @@ public class EnemyGroup : MonoBehaviour
         _enemyCount--;
         if (_enemyCount <= 0)
         {
-            OnEnemyGroupDead?.Invoke();
+            EnemyGroupDead?.Invoke();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class ProgressBar : MonoBehaviour 
 {
     private MoveToPoints _moveToPoints;
@@ -9,7 +10,7 @@ public class ProgressBar : MonoBehaviour
     public void Construct(MoveToPoints moveToPoints)
     {
         _moveToPoints = moveToPoints;
-        _moveToPoints.OnPointChanged += ProgressBarUpdate;
+        _moveToPoints.PointChanged += ProgressBarUpdate;
     }
 
     private void Start()
@@ -19,7 +20,7 @@ public class ProgressBar : MonoBehaviour
 
     private void OnDestroy()
     {
-        _moveToPoints.OnPointChanged -= ProgressBarUpdate;
+        _moveToPoints.PointChanged -= ProgressBarUpdate;
     }
 
     private void ProgressBarUpdate(int currentPoint, int amountPoints)
