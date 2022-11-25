@@ -16,7 +16,7 @@ public class Enemy: BaseEnemy
     
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<BaseBullet>(out var bullet))
+        if(other.TryGetComponent<Bullet>(out var bullet))
         {
             _health -= bullet.Damage;
             HealthChangedInvoke();

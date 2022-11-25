@@ -1,21 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Slider))]
 public class ProgressBar : MonoBehaviour 
 {
+    [SerializeField] private Slider _progressSlider;
     private MoveToPoints _moveToPoints;
-    private Slider _progressSlider;
 
     public void Construct(MoveToPoints moveToPoints)
     {
         _moveToPoints = moveToPoints;
         _moveToPoints.PointChanged += ProgressBarUpdate;
-    }
-
-    private void Start()
-    {
-        _progressSlider = GetComponent<Slider>();
     }
 
     private void OnDestroy()

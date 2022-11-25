@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - StopPoint
   - EnemyBone
+  - LoadingCurtain
+  - InitialPoint
+  - EnemyGroupPoint
   layers:
   - Default
   - TransparentFX

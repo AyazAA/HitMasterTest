@@ -1,4 +1,6 @@
 ﻿using System;
+using Assets.CodeBase.Services.Input;
+using CodeBase.StaticData;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,17 +10,20 @@ public class MoveToPoints : MonoBehaviour
     public event Action<int, int> PointChanged;
     public event Action PointReached;
     public event Action FinishPointReached;
-    private Transform[] _points;
+    
+    [SerializeField] private NavMeshAgent _navMeshAgent;
+    private StopPoint[] _points;
     private EnemyGroup[] _enemyGroups;
-    private NavMeshAgent _navMeshAgent;
     private int _currentPoint = 0;
-    private bool _enemyGroupdDead = false;
+    private bool _enemyGroupDead = false;
+    private IInputService _inputService;
 
-    public void Construct(Transform[] points, EnemyGroup[] enemyGroups)
+    public void Construct(IInputService inputService, StopPoint[] points, EnemyGroup[] enemyGroups, HeroStaticData heroData)
     {
+        _inputService = inputService;
         _points = points;
         _enemyGroups = enemyGroups;
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.speed = heroData.Speed;
         for (int i = 0; i < _enemyGroups.Length; i++)
         {
             _enemyGroups[i].EnemyGroupDead += OnEnemyGroupDead;
@@ -43,7 +48,7 @@ public class MoveToPoints : MonoBehaviour
         if (_currentPoint == 0)
         {
             if (_navMeshAgent.velocity == Vector3.zero &&
-                (Input.GetMouseButtonDown(0) || Input.touchCount > 0))
+                _inputService.IsTapToScreen())
             {
                 Move();
             }
@@ -51,10 +56,10 @@ public class MoveToPoints : MonoBehaviour
         else
         {
             if (_navMeshAgent.velocity == Vector3.zero &&
-                _enemyGroupdDead)
+                _enemyGroupDead)
             {
                 Move();
-                _enemyGroupdDead = false;
+                _enemyGroupDead = false;
             }
         }
     }
@@ -63,7 +68,7 @@ public class MoveToPoints : MonoBehaviour
     {
         if (_currentPoint < _points.Length)
         {
-            _navMeshAgent.SetDestination(_points[_currentPoint++].position);
+            _navMeshAgent.SetDestination(_points[_currentPoint++].transform.position);
             PointChanged?.Invoke(_currentPoint, _points.Length);
         }
     }
@@ -82,6 +87,6 @@ public class MoveToPoints : MonoBehaviour
 
     private void OnEnemyGroupDead()
     {
-        _enemyGroupdDead = true;
+        _enemyGroupDead = true;
     }
 }

@@ -1,15 +1,13 @@
 ﻿using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TMP_Text))]
 public class StartGameInviteText : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _inviteText;
     private MoveToPoints _moveToPoints;
-    private TMP_Text _inviteText;
 
     public void Construct(MoveToPoints moveToPoints)
     {
-        _inviteText = GetComponent<TMP_Text>();
         _moveToPoints = moveToPoints;
         _moveToPoints.PointChanged += TextHide;
     }

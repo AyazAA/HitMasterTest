@@ -1,14 +1,16 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using CodeBase.Infrastructure.States;
+using UnityEngine;
 
 public class SceneController : MonoBehaviour
 {
     private MoveToPoints _moveToPoints;
-    private const string SceneName = "Demo";
+    private GameStateMachine _stateMachine;
+    private bool IsFinished;
 
-    public void Construct(MoveToPoints moveToPoints)
+    public void Construct(GameStateMachine stateMachine, MoveToPoints moveToPoints)
     {
         _moveToPoints = moveToPoints;
+        _stateMachine = stateMachine;
         _moveToPoints.FinishPointReached += OnFinishPointReached;
     }
 
@@ -19,6 +21,10 @@ public class SceneController : MonoBehaviour
 
     private void OnFinishPointReached()
     {
-        SceneManager.LoadScene(SceneName);
+        if(IsFinished)
+            return;
+        
+        _stateMachine.Enter<BootstrapState>();
+        IsFinished = true;
     }
 }
